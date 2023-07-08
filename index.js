@@ -17,6 +17,9 @@ const invokeAction = async ({ action, contactId, name, email, phone }) => {
     // результат в консоль
     return console.table(allContacts)
 
+    // можно с break аналогично делать
+    // console.log(oneContact);
+    //   break;
 
 // получить контакт по id
     case 'get':
@@ -49,7 +52,7 @@ invokeAction({action: "get", contactId : "qdggE76Jtbfd9eWJHrssH"})
 
 
 // добавить контакт
-invokeAction({action: "add", name : "Book for you1", email: "D. Moroz1", phone : "Book for you1"})
+invokeAction({action: "add", name : "Volodymyr", email: "noni@gmail.com", phone : "123456789"})
 
 
 //  удалить контакт по id

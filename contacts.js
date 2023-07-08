@@ -18,6 +18,10 @@ const {nanoid} = require('nanoid')
     // получаем вначале весь обьект contacts
     const contacts = await listContacts()
     const result = contacts.find(item => item.contactId === contactId)
+    if (!result) {
+        console.log('Нет контакта c таким id');
+      }
+
     return result || null 
   }
 
@@ -26,7 +30,9 @@ const {nanoid} = require('nanoid')
     // получаем вначале весь обьект
     const contacts = await listContacts()
     const index = contacts.findIndex(item => item.contactId === contactId)
-    if(index === -1){return null}
+    if(index === -1){
+        console.log('Контакт c указанным ID не найден');
+        return null}
   // Метод splice() изменяет исходный массив, удаляя элементы, и возвращает массив удаленных элементов. 
   const [result] = contacts.splice(index, 1)
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2))
@@ -42,7 +48,7 @@ const {nanoid} = require('nanoid')
   // Проверяем, есть ли уже контакт с указанным name, email, phone, чтобы не добавлять повторно
   const existingContact = contacts.find((contact) => contact.name === data.name && contact.email === data.email && contact.phone === data.phone);
   if (existingContact) {
-    console.log('Contact уже существует');
+    console.log('Контакт не добавлен, так как уже существует такой контакт');
     return null;
   }
   
