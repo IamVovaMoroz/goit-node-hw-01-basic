@@ -1,63 +1,62 @@
-// index.js
+const { hideBin } = require('yargs/helpers');
 const argv = require('yargs').argv;
-const {hideBin} = require("yargs/helpers")
-
-// путь к функциям 
-const contacts = require("./contacts")
-
-
+const contacts = require('./contacts');
 
 const invokeAction = async ({ action, contactId, name, email, phone }) => {
   switch (action) {
-
-    // все контакты получаем
-    case 'list':
     // получаем все контакты
-    const allContacts = await contacts.listContacts()
-    // результат в консоль
-    return console.table(allContacts)
-
-    // можно с break аналогично делать
-    // console.log(oneContact);
-    //   break;
-
-// получить контакт по id
+    case 'list':
+        const allContacts = await contacts.listContacts();
+      console.table(allContacts);
+      break;
+    // получаем по ID контакт
     case 'get':
-        const oneContact = await contacts.getContactById(contactId)
-        return console.log(oneContact)
-
-
-    //  добавить контакт
+      const oneContact = await contacts.getContactById(contactId);
+      console.log(oneContact);
+      break;
+//    добавить контакт
     case 'add':
-    const newContact =  await contacts.addContact({name, email, phone})
-   return console.log(newContact)
-
-
-
+      const newContact = await contacts.addContact({ name, email, phone });
+      console.log(newContact);
+      break;
+// удалить контакт по ID
     case 'remove':
-     const deleteContact =  await contacts.removeContact()
-     return console.log(deleteContact)
+      const removeResult = await contacts.removeContact(contactId);
+      if (removeResult) {
+        console.log('Contact removed successfully.');
+      } else {
+        console.log('Contact not found.');
+      }
+      break;
 
     default:
       console.warn('\x1B[31m Unknown action type!');
   }
+};
+// тут определяем тип команды(list, get, add, remove )
+const command = argv.action;
+
+// argv  объект, который содержит аргументы командной строки, переданные при запуске скрипта. argv.id обращается к значению аргумента с именем id.
+const contactId = argv.id;
+
+// прочитав значение из командной строки передаём их в функцию invokeAction 
+if (command) {
+  invokeAction({ action: command, contactId, name: argv.name, email: argv.email, phone: argv.phone });
+} else {
+  console.log('Please provide a valid command.');
 }
 
-// передаём обьект со свойством list , получить все контакты
 
-invokeAction({action: "list"})
+// Удаление через код, а не через строку командную
+// invokeAction({ action: 'list' })
 
-//  получить контакт по id
-invokeAction({action: "get", contactId : "qdggE76Jtbfd9eWJHrssH"})
+// invokeAction({ action: 'get', contactId: 'qdggE76Jtbfd9eWJHrssH' })
 
+// invokeAction({
+//   action: 'add',
+//   name: 'Volodymyr',
+//   email: 'noni@gmail.com',
+//   phone: '123456789'
+// })
 
-// добавить контакт
-invokeAction({action: "add", name : "Volodymyr", email: "noni@gmail.com", phone : "123456789"})
-
-
-//  удалить контакт по id
-invokeAction({action: "remove", contactId : "qdggE76Jtbfd9eWJHrssH!"})
-
-
-
-
+// invokeAction({ action: 'remove', contactId: 1 })
