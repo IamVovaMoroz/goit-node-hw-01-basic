@@ -34,7 +34,7 @@ const {nanoid} = require('nanoid')
 
 
     if(index === -1){
-        console.log('Контакт c указанным ID не найден');
+        // console.log('Контакт c указанным ID не найден');
         return null}
   // Метод splice() изменяет исходный массив, удаляя элементы, и возвращает массив удаленных элементов. 
   const result = contacts.splice(index, 1)

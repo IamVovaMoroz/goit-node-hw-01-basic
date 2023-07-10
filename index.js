@@ -22,11 +22,7 @@ const invokeAction = async ({ action, contactId, name, email, phone }) => {
 // удалить контакт по ID
     case 'remove':
       const removeResult = await contacts.removeContact(contactId);
-      if (removeResult) {
-        console.log('Contact removed successfully.');
-      } else {
-        console.log('Contact not found.');
-      }
+   console.log(removeResult)
       break;
 
     default:
