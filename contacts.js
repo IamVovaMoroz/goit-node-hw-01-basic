@@ -37,9 +37,10 @@ const {nanoid} = require('nanoid')
         // console.log('Контакт c указанным ID не найден');
         return null}
   // Метод splice() изменяет исходный массив, удаляя элементы, и возвращает массив удаленных элементов. 
-  const result = contacts.splice(index, 1)
-//   const [result] = contacts.splice(index, 1)   если нужно в дальнейшем сохранять или использовать удалённый элемент. То закидываем в массив 
+  const [result] = contacts.splice(index, 1)
+//   const [result] = contacts.splice(index, 1)   если нужно в дальнейшем сохранять или использовать удалённый элемент. \Возвращаем обьект , если так то массив с обьектом const result = contacts.splice(index, 1)
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2))
+
   return result
   }
   
